@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: icon-scout-frontend-deployment
+  labels:
+    app: icon-scout-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: icon-scout-frontend
+  template:
+    metadata:
+      labels:
+        app: icon-scout-frontend
+    spec:
+      containers:
+        - name: icon-scout-frontend
+          image: ghcr.io/gruberb/icon-scout-frontend:latest
+          ports:
+            - containerPort: 80

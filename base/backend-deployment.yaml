@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: icon-scout-deployment
+  labels:
+    app: icon-scout
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: icon-scout
+  template:
+    metadata:
+      labels:
+        app: icon-scout
+    spec:
+      containers:
+        - name: icon-scout
+          image: ghcr.io/gruberb/icon-scout:latest
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /etc/secrets/gcs-key.json
+            - name: STORAGE_MODE
+              value: gcs
+            - name: RUST_LOG
+              value: info
+          volumeMounts:
+            - name: gcs-key
+              mountPath: /etc/secrets
+              readOnly: true
+          ports:
+            - containerPort: 3000
+      volumes:
+        - name: gcs-key
+          secret:
+            secretName: gcs-key-secret

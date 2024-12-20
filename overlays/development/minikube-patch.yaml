@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: icon-scout-deployment
+spec:
+  template:
+    spec:
+      containers:
+        - name: icon-scout
+          imagePullPolicy: Never
+          env:
+            - name: STORAGE_MODE
+              value: "local"
+            - name: RUST_LOG
+              value: "debug"
+          volumeMounts: null
+      volumes: null
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: icon-scout-frontend-deployment
+spec:
+  template:
+    spec:
+      containers:
+        - name: icon-scout-frontend
+          imagePullPolicy: Never
